@@ -1,7 +1,7 @@
 variable "nodes" {
     description = "cluser nodes the kubernetes to deploy to"
-    type = list(map({
-        ssh = string
+    type = list(object({
+        type = string
         host = string
         port = string
         user = string
@@ -17,7 +17,7 @@ variable "pre_install" {
 
 variable "k8s_config" {
     description = "kubernetes basic config"
-    type = map({
+    type = object({
         filename = string
         filepath = string
     })    

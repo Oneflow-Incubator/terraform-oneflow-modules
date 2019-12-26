@@ -1,6 +1,8 @@
 # docker installation
 resource "null_resource" "nodes" {
-    for_each = var.nodes
+    for_each = {
+      for node in var.nodes: node.host => node
+    }
 
     // mapper for connections
     connection {
@@ -13,7 +15,7 @@ resource "null_resource" "nodes" {
 
     // install docker 
     provisioner "remote-exec" {
-        inline = var.pre-install
+        inline = var.pre_install
     }
 }
 
