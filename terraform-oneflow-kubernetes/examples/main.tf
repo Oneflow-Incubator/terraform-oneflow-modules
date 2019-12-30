@@ -25,8 +25,12 @@ variable "nodes" {
 
 variable "pre_install" {
     default = [
-        "hostname",
-        "uname -r",
+        "echo '=========== docker installation start ==========='",
+        "sudo yum remove docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine",
+        "sudo yum install -y yum-utils device-mapper-persistent-data lvm2",
+        "sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo",
+        "sudo yum install -y docker-ce docker-ce-cli containerd.io",
+        "echo '=========== docker installation end ============='",
     ]
 }
 
@@ -37,8 +41,8 @@ variable "k8s_config" {
     }
 }
 
-module "aaaaa" {
-    source = "../../"
+module "docker-kubernetes-installation" {
+    source = "../"
     nodes = var.nodes
     pre_install = var.pre_install
     k8s_config = var.k8s_config
